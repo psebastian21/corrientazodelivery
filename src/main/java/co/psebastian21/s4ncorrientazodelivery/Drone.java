@@ -10,5 +10,6 @@ public class Drone {
 	
 	public Drone (List<String> instructions) {
 		this.instructions = instructions;
+		this.location = new Point();
 	}
 }
