@@ -1,4 +1,4 @@
-package co.psebastian21.s4ncorrientazodelivery;
+package co.psebastian21.s4ncorrientazodelivery.droneoperation;
 
 public class HeadingSituation {
 	
@@ -18,11 +18,13 @@ public class HeadingSituation {
 		this.heading = northHeading;
 	}
 	
-	public void rotateClockwise() {
+	public HeadingValue rotateClockwise() {
 		this.heading = this.heading.nextClockwise;
+		return this.heading.headingValue;
 	}
-	public void rotateCounterclockwise() {
+	public HeadingValue rotateCounterclockwise() {
 		this.heading = this.heading.nextCounterclockwise;
+		return this.heading.headingValue;
 	}
 	public HeadingValue getHeading() {
 		return this.heading.headingValue;
