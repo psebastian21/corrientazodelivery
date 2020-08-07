@@ -51,10 +51,31 @@ public class Drone {
 		return this.locationAndHeading.rotateCounterclockwise();
 	}
 	private String execute(String instruction) {
+		for(int i = 0; i < instruction.length(); i++) {
+			char c = instruction.charAt(i);
+			switch(c) {
+			case 'A':
+				this.moveForward();
+				break;
+			case 'I':
+				this.rotateCounterclockwise();
+				break;
+			default:
+				this.rotateClockwise();
+			}
+		}
+		Point currentLocation = this.locationAndHeading.getLocation();
+		StringBuilder sb = new StringBuilder();
+		sb.append('(')
+		.append(String.valueOf(currentLocation.getX()))
+		.append(", ")
+		.append(String.valueOf(currentLocation.getY()))
+		.append(") direction ")
+		.append(this.locationAndHeading.getHeading());
+		return sb.toString();
 		
 	}
 	private void getHome() {
-		// TODO Auto-generated method stub
-		
+		this.locationAndHeading.getHome();
 	}
 }

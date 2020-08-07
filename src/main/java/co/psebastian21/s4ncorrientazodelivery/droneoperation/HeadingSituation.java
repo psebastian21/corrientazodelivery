@@ -18,11 +18,11 @@ public class HeadingSituation {
 		this.heading = northHeading;
 	}
 	
-	public HeadingValue rotateClockwise() {
+	HeadingValue rotateClockwise() {
 		this.heading = this.heading.nextClockwise;
 		return this.heading.headingValue;
 	}
-	public HeadingValue rotateCounterclockwise() {
+	HeadingValue rotateCounterclockwise() {
 		this.heading = this.heading.nextCounterclockwise;
 		return this.heading.headingValue;
 	}

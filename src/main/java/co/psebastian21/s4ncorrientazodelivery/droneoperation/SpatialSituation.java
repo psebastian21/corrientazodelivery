@@ -33,4 +33,16 @@ public class SpatialSituation {
 		return this.location;
 	}
 
+	public Point getLocation() {
+		return location;
+	}
+	public HeadingValue getHeading() {
+		return this.heading.getHeading();
+	}
+
+	public void getHome() {
+		this.location.addToX(this.location.getX() * -1);
+		this.location.addToY(this.location.getY() * -1);
+	}
+
 }

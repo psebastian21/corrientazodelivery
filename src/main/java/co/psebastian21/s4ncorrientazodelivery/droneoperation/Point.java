@@ -14,10 +14,10 @@ public class Point {
 		this.y = y;
 	}
 	
-	public void addToX(int x) {
+	void addToX(int x) {
 		this.x += x;
 	}
-	public void addToY(int y) {
+	void addToY(int y) {
 		this.y += y;
 	}
 	public int getX() {
