@@ -43,5 +43,10 @@ public class DeliverySystem {
 			drones.add(drone);
 		}
 	}
+	
+	public void work() {
+		drones.parallelStream()
+		.forEach(Drone::deliver);
+	}
 
 }
