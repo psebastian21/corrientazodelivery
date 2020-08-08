@@ -2,25 +2,17 @@ package co.psebastian21.s4ncorrientazodelivery.droneoperation;
 
 import java.util.List;
 
+import co.psebastian21.s4ncorrientazodelivery.DeliverySystem;
 import co.psebastian21.s4ncorrientazodelivery.droneoperation.exception.MaxCargoLimitExceededException;
 import co.psebastian21.s4ncorrientazodelivery.droneoperation.exception.MaxDistanceLimitExceededException;
 
 public class Drone {
-	private static int maxDistance = 10;
-	private static int maxCargo = 3;
 	
 	private List<String> instructions;
 	private SpatialSituation locationAndHeading;
 	
-	public static void setMaxDistance(int maxDistance) {
-		Drone.maxDistance = maxDistance;
-	}
-	public static void setMaxCargo(int maxCargo) {
-		Drone.maxCargo = maxCargo;
-	}
-	
 	public Drone (List<String> instructions) {
-		if(instructions.size() > Drone.maxCargo) {
+		if(instructions.size() > DeliverySystem.getMaxCargo()) {
 			throw new MaxCargoLimitExceededException("Max cargo limit exceeded");
 		}
 		this.instructions = instructions;
@@ -47,7 +39,7 @@ public class Drone {
 	private void moveForward() {
 		Point finalLocation = this.locationAndHeading.moveForward();
 		double distanceFromOrigin = Math.sqrt(Math.pow(finalLocation.getX(), 2) + Math.pow(finalLocation.getY(), 2));
-		if(distanceFromOrigin > Drone.maxDistance) {
+		if(distanceFromOrigin > DeliverySystem.getMaxDistance()) {
 			throw new MaxDistanceLimitExceededException("Max distance limit exceeded");
 		}
 	}
