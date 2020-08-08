@@ -39,14 +39,20 @@ public class DeliverySystem {
 		FileIO fileIO = new FileIO();
 		for(int i = 0; i < DeliverySystem.maxDrones; i++) {
 			List<String> instructions = fileIO.readFileLines(files[i]);
-			Drone drone = new Drone(instructions);
+			Drone drone = new Drone(instructions, i + 1);
 			drones.add(drone);
 		}
 	}
 	
 	public void work() {
-		drones.parallelStream()
-		.forEach(Drone::deliver);
+		drones.stream()
+		.forEach(drone -> {
+			try {
+				drone.deliver();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 }

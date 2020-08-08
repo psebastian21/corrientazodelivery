@@ -1,31 +1,38 @@
 package co.psebastian21.s4ncorrientazodelivery.droneoperation;
 
+import java.io.IOException;
 import java.util.List;
 
 import co.psebastian21.s4ncorrientazodelivery.DeliverySystem;
 import co.psebastian21.s4ncorrientazodelivery.droneoperation.exception.MaxCargoLimitExceededException;
 import co.psebastian21.s4ncorrientazodelivery.droneoperation.exception.MaxDistanceLimitExceededException;
+import co.psebastian21.s4ncorrientazodelivery.io.FileIO;
 
 public class Drone {
 	
 	private List<String> instructions;
 	private SpatialSituation locationAndHeading;
+	private int droneNumber;
 	
-	public Drone (List<String> instructions) {
+	public Drone (List<String> instructions, int droneNumber) {
 		if(instructions.size() > DeliverySystem.getMaxCargo()) {
 			throw new MaxCargoLimitExceededException("Max cargo limit exceeded");
 		}
 		this.instructions = instructions;
 		this.locationAndHeading = new SpatialSituation();
+		this.droneNumber = droneNumber;
 	}
 	
-	public String deliver() {
+	public String deliver() throws IOException {
 		StringBuilder sb = new StringBuilder();
 		try {
 			instructions.stream().forEach(i -> {
 			sb.append(this.executeOneInstruction(i));
 			sb.append("\n");
 			});
+			FileIO fileIO = new FileIO();
+			String fileName = this.droneNumber <= 9 ? "out0" + this.droneNumber + ".txt" : "out" + this.droneNumber + ".txt";
+			fileIO.writeFile(fileName, sb.toString());
 		}
 		catch(MaxDistanceLimitExceededException e) {
 			sb.append(e.getMessage());
