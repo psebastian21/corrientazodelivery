@@ -12,6 +12,13 @@ public class Drone {
 	private List<String> instructions;
 	private SpatialSituation locationAndHeading;
 	
+	public static void setMaxDistance(int maxDistance) {
+		Drone.maxDistance = maxDistance;
+	}
+	public static void setMaxCargo(int maxCargo) {
+		Drone.maxCargo = maxCargo;
+	}
+	
 	public Drone (List<String> instructions) {
 		if(instructions.size() > Drone.maxCargo) {
 			throw new MaxCargoLimitExceededException("Max cargo limit exceeded");
@@ -24,7 +31,7 @@ public class Drone {
 		StringBuilder sb = new StringBuilder();
 		try {
 			instructions.stream().forEach(i -> {
-			sb.append(this.execute(i));
+			sb.append(this.executeOneInstruction(i));
 			sb.append("\n");
 			});
 		}
@@ -50,7 +57,7 @@ public class Drone {
 	private HeadingValue rotateCounterclockwise() {
 		return this.locationAndHeading.rotateCounterclockwise();
 	}
-	private String execute(String instruction) {
+	private String executeOneInstruction(String instruction) {
 		for(int i = 0; i < instruction.length(); i++) {
 			char c = instruction.charAt(i);
 			switch(c) {
