@@ -16,6 +16,7 @@ public class Drone {
 	
 	public Drone (List<String> instructions, int droneNumber) {
 		if(instructions.size() > DeliverySystem.getMaxCargo()) {
+			//TODO output as text file
 			throw new MaxCargoLimitExceededException("Max cargo limit exceeded");
 		}
 		this.instructions = instructions;

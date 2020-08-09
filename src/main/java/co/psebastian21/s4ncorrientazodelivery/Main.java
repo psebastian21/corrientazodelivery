@@ -9,7 +9,7 @@ public class Main {
 		System.out.println("Proceeding with default values");
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		try {
-			DeliverySystem.setMaxDrones(2);
+			DeliverySystem.setMaxDrones(3);
 			DeliverySystem system = new DeliverySystem();
 			system.work();
 		} catch (IOException e) {
