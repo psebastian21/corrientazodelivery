@@ -1,0 +1,3 @@
+(-2, 4) direction WEST
+(-1, 3) direction SOUTH
+(0, 0) direction WEST

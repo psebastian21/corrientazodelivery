@@ -1,6 +1,7 @@
 package co.psebastian21.s4ncorrientazodelivery;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import co.psebastian21.s4ncorrientazodelivery.droneoperation.Drone;
@@ -22,6 +23,9 @@ public class DeliverySystem {
 	public static int getMaxDrones() {
 		return maxDrones;
 	}
+	public static void setMaxDrones(int maxDrones) {
+		DeliverySystem.maxDrones = maxDrones;
+	}
 	public static int getMaxDistance() {
 		return maxDistance;
 	}
@@ -37,6 +41,7 @@ public class DeliverySystem {
 	
 	public DeliverySystem() throws IOException {
 		FileIO fileIO = new FileIO();
+		drones = new ArrayList<>();
 		for(int i = 0; i < DeliverySystem.maxDrones; i++) {
 			List<String> instructions = fileIO.readFileLines(files[i]);
 			Drone drone = new Drone(instructions, i + 1);

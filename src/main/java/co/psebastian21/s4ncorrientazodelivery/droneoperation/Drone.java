@@ -30,15 +30,15 @@ public class Drone {
 			sb.append(this.executeOneInstruction(i));
 			sb.append("\n");
 			});
-			FileIO fileIO = new FileIO();
-			String fileName = this.droneNumber <= 9 ? "out0" + this.droneNumber + ".txt" : "out" + this.droneNumber + ".txt";
-			fileIO.writeFile(fileName, sb.toString());
 		}
 		catch(MaxDistanceLimitExceededException e) {
 			sb.append(e.getMessage());
 		}
 		finally {
 			this.getHome();
+			FileIO fileIO = new FileIO();
+			String fileName = this.droneNumber <= 9 ? "out0" + this.droneNumber + ".txt" : "out" + this.droneNumber + ".txt";
+			fileIO.writeFile(fileName, sb.toString());
 		}
 		return sb.toString();
 	}
