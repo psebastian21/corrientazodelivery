@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import co.psebastian21.s4ncorrientazodelivery.droneoperation.exception.MaxCargoLimitExceededException;
 import co.psebastian21.s4ncorrientazodelivery.io.FileIO;
 
 public class DroneTests {
@@ -29,6 +30,32 @@ public class DroneTests {
 				"(-1, 3) direction SOUTH\n" + 
 				"(0, 0) direction WEST\n";
 		Assert.assertEquals(expected, output);
+	}
+	@Test
+	public void whenDistanceLimitExceededThenOutputIsCorrect() throws IOException {
+		//Arrange
+		FileIO fIO = Mockito.mock(FileIO.class);
+		Mockito.doNothing().when(fIO).writeFile(Mockito.anyString(), Mockito.anyString());
+		List<String> instructions = new LinkedList<>();
+		instructions.add("AAAAIAAAAAAAAAAAAAAAAAAAAA");
+		Drone drone = new Drone(instructions, 10);
+		drone.setFileIO(fIO);
+		//Act
+		String output = drone.deliver();
+		//Assert
+		String expected = "Max distance limit exceeded";
+		Assert.assertEquals(expected, output);
+	}
+	@Test(expected = MaxCargoLimitExceededException.class)
+	public void whenMaxCargoLimitExceededThenThrowException() throws IOException {
+		//Arrange
+		List<String> instructions = new LinkedList<>();
+		instructions.add("AAAAIAA");
+		instructions.add("DDDAIAD");
+		instructions.add("AAIADAD");
+		instructions.add("AAIADAD");
+		//Act
+		new Drone(instructions, 10);	
 	}
 
 }
