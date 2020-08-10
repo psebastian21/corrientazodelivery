@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.psebastian21.s4ncorrientazodelivery.droneoperation.Drone;
+import co.psebastian21.s4ncorrientazodelivery.droneoperation.exception.MaxCargoLimitExceededException;
 import co.psebastian21.s4ncorrientazodelivery.io.FileIO;
 
 public class DeliverySystem {
@@ -44,8 +45,14 @@ public class DeliverySystem {
 		drones = new ArrayList<>();
 		for(int i = 0; i < DeliverySystem.maxDrones; i++) {
 			List<String> instructions = fileIO.readFileLines(files[i]);
-			Drone drone = new Drone(instructions, i + 1);
-			drones.add(drone);
+			try {
+				Drone drone = new Drone(instructions, i + 1);
+				drones.add(drone);
+			}
+			catch(MaxCargoLimitExceededException e) {
+				String fileName = (i + 1) <= 9 ? "out0" + (i + 1) + ".txt" : "out" + (i + 1) + ".txt";
+				fileIO.writeFile(fileName, e.getMessage());
+			}
 		}
 	}
 	

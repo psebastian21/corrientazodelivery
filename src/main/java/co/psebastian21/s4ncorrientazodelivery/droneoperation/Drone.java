@@ -13,15 +13,16 @@ public class Drone {
 	private List<String> instructions;
 	private SpatialSituation locationAndHeading;
 	private int droneNumber;
+	private FileIO fileIO;
 	
 	public Drone (List<String> instructions, int droneNumber) {
 		if(instructions.size() > DeliverySystem.getMaxCargo()) {
-			//TODO output as text file
 			throw new MaxCargoLimitExceededException("Max cargo limit exceeded");
 		}
 		this.instructions = instructions;
 		this.locationAndHeading = new SpatialSituation();
 		this.droneNumber = droneNumber;
+		this.fileIO = new FileIO();
 	}
 	
 	public String deliver() throws IOException {
@@ -37,11 +38,14 @@ public class Drone {
 		}
 		finally {
 			this.getHome();
-			FileIO fileIO = new FileIO();
-			String fileName = this.droneNumber <= 9 ? "out0" + this.droneNumber + ".txt" : "out" + this.droneNumber + ".txt";
-			fileIO.writeFile(fileName, sb.toString());
+			this.yieldOutputFile(sb.toString());
 		}
 		return sb.toString();
+	}
+
+	private void yieldOutputFile(String message) throws IOException {
+		String fileName = this.droneNumber <= 9 ? "out0" + this.droneNumber + ".txt" : "out" + this.droneNumber + ".txt";
+		fileIO.writeFile(fileName, message);
 	}
 	
 	private void moveForward() {
@@ -84,5 +88,9 @@ public class Drone {
 	}
 	private void getHome() {
 		this.locationAndHeading.getHome();
+	}
+
+	public void setFileIO(FileIO fileIO) {
+		this.fileIO = fileIO;
 	}
 }
