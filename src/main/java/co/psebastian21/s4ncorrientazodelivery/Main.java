@@ -10,6 +10,7 @@ public class Main {
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		try {
 			DeliverySystem system = new DeliverySystem();
+			system.init();
 			system.work();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -20,6 +20,8 @@ public class DeliverySystem {
 			"in09.txt",	"in10.txt",	"in11.txt",	"in12.txt",	"in13.txt",	"in14.txt",	"in15.txt",	"in16.txt",
 			"in17.txt",	"in18.txt",	"in19.txt",	"in20.txt"
 	};
+	private FileIO fileIO;
+	private boolean initialized = false;
 	
 	public static int getMaxDrones() {
 		return maxDrones;
@@ -40,9 +42,12 @@ public class DeliverySystem {
 		DeliverySystem.maxCargo = maxCargo;
 	}
 	
-	public DeliverySystem() throws IOException {
-		FileIO fileIO = new FileIO();
+	public DeliverySystem() {
+		fileIO = new FileIO();
 		drones = new ArrayList<>();
+	}
+	
+	public void init() throws IOException {
 		for(int i = 0; i < DeliverySystem.maxDrones; i++) {
 			List<String> instructions = fileIO.readFileLines(files[i]);
 			try {
@@ -54,17 +59,21 @@ public class DeliverySystem {
 				fileIO.writeFile(fileName, e.getMessage());
 			}
 		}
+		this.initialized = true;
 	}
 	
-	public void work() {
-		drones.stream()
-		.forEach(drone -> {
-			try {
-				drone.deliver();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		});
+	public void work() throws IOException {
+		if (!this.initialized)
+			throw new IllegalStateException("Delivery system not initialized");
+		for(Drone drone : drones) {
+			drone.deliver();
+		}
+	}
+	public void setFileIO(FileIO fileIO) {
+		this.fileIO = fileIO;
+	}
+	public void setDrones(List<Drone> drones) {
+		this.drones = drones;
 	}
 
 }

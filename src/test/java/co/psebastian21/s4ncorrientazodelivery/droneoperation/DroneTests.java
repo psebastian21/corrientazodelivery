@@ -55,7 +55,7 @@ public class DroneTests {
 		instructions.add("AAIADAD");
 		instructions.add("AAIADAD");
 		//Act
-		new Drone(instructions, 10);	
+		new Drone(instructions, 10);
 	}
 
 }
